@@ -1,0 +1,25 @@
+{
+  "name": "automated-testing-playwaright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pw:test": "npx playwright test",
+    "pw:report": "npx playwright show-report",
+    "pw:desktop:chrome": "npx playwright test --headed --workers=1 --retries=0 --project=desktop/chrome -g",
+    "pw:desktop:edge": "npx playwright test --headed --workers=1 --retries=0 --project=desktop/edge -g",
+    "pw:mobile:chrome": "npx playwright test --headed --workers=1 --retries=0 --project=mobile/chrome -g",
+    "pw:mobile:safari": "npx playwright test --headed --workers=1 --retries=0 --project=mobile/safari -g",
+    "pw:all:desktop:chrome": "npx playwright test --headed --workers=1 --retries=0 --project=desktop/chrome",
+    "pw:all:desktop:edge": "npx playwright test --headed --workers=1 --retries=0 --project=desktop/edge",
+    "pw:all:mobile:chrome": "npx playwright test --headed --workers=1 --retries=0 --project=mobile/chrome",
+    "pw:all:mobile:safari": "npx playwright test --headed --workers=1 --retries=0 --project=mobile/safari"
+  },
+  "keywords": [],
+  "author": "Jason Willyan",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.39.0",
+    "@types/node": "^20.9.0"
+  }
+}
