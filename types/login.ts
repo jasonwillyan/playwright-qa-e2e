@@ -4,12 +4,16 @@ export interface Placeholders {
 }
 
 export interface Selectors {
-  login: {
-    title: string;
-    logo: string[];
-    placeholders: Placeholders;
-    forgotPasswordLink: string;
-    orangeHRMLink: string;
-    socialLinks: string[];
-  };
-}
+  title: string;
+  logo: string[];
+  placeholders: Placeholders;
+  forgotPasswordLink: string;
+  orangeHRMLink: string;
+  socialLinks: string[];
+  inputUsername: string,
+  inputPassword: string,
+  loginBtn: string,
+  alertErro: string,
+  alertMessage: string,
+  alertMessageRequired: string,
+};
