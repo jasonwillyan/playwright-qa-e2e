@@ -72,7 +72,7 @@ test.describe("Login functionality", () => {
 
     await loginPage.loginUser(process.env.USER!, process.env.PASSWORD!);
     await loginPage.clickLoginBtn();
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load", { timeout: 3000 });
 
     expect(page.url()).toContain("/dashboard/index");
     expect(await loginPage.validateUsername()).toBeTruthy();
