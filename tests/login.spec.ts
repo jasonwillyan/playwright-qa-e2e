@@ -1,19 +1,21 @@
 import { test, expect } from "@playwright/test";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 import { LoginPage } from "../pages/login.ts";
-require('dotenv').config();
+require("dotenv").config();
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/');
+  await page.goto("/");
 });
 
 test.describe("Login Page Interface", () => {
-  test("[ID101] @login @phone @desktop check interface elements should be visible", async ({ page }) => {
+  test("[ID101] @login @phone @desktop check interface elements should be visible", async ({
+    page,
+  }) => {
     const title: string = "OrangeHRM";
     const titleModal: string = "Login";
     const placeholder = {
       username: "Username",
-      password: "Password"
+      password: "Password",
     };
 
     const loginPage = new LoginPage(page);
@@ -40,8 +42,8 @@ test.describe("Login links validation", () => {
       "https://www.linkedin.com/company/orangehrm/mycompany/",
       "https://www.facebook.com/OrangeHRM/",
       "https://twitter.com/orangehrm?lang=en",
-      "https://www.youtube.com/c/OrangeHRMInc"
-    ]
+      "https://www.youtube.com/c/OrangeHRMInc",
+    ];
 
     const loginPage = new LoginPage(page);
     await loginPage.validateLinks(links);
@@ -63,11 +65,14 @@ test.describe("Login links validation", () => {
 });
 
 test.describe("Login functionality", () => {
-  test("[ID103] @login @phone @desktop validate successful login with valid credentials", async ({ page }) => {
+  test("[ID103] @login @phone @desktop validate successful login with valid credentials", async ({
+    page,
+  }) => {
     const loginPage = new LoginPage(page);
 
     await loginPage.loginUser(process.env.USER!, process.env.PASSWORD!);
     await loginPage.clickLoginBtn();
+    await page.waitForLoadState("networkidle");
 
     expect(page.url()).toContain("/dashboard/index");
     expect(await loginPage.validateUsername()).toBeTruthy();
@@ -75,7 +80,9 @@ test.describe("Login functionality", () => {
     expect(nameIsVisible).toBeTruthy();
   });
 
-  test("[ID104] @login @phone @desktop validate login with incorrect password", async ({ page }) => {
+  test("[ID104] @login @phone @desktop validate login with incorrect password", async ({
+    page,
+  }) => {
     const messageAlert = "Invalid credentials";
     const loginPage = new LoginPage(page);
 
@@ -89,7 +96,7 @@ test.describe("Login functionality", () => {
 
   test("[ID105] @login @phone @desktop validate login with null password", async ({ page }) => {
     const loginPage = new LoginPage(page);
-  
+
     await loginPage.loginUser(process.env.USER!, "");
     await loginPage.clickLoginBtn();
 
@@ -98,11 +105,12 @@ test.describe("Login functionality", () => {
     expect(await loginPage.getAlertMessageRequired()).toContain("Required");
   });
 
-
-  test("[ID106] @login @phone @desktop validate login with incorrect username", async ({ page }) => {
+  test("[ID106] @login @phone @desktop validate login with incorrect username", async ({
+    page,
+  }) => {
     const messageAlert = "Invalid credentials";
     const loginPage = new LoginPage(page);
-  
+
     await loginPage.loginUser(faker.internet.userName(), process.env.PASSWORD!);
     await loginPage.clickLoginBtn();
 
@@ -113,28 +121,30 @@ test.describe("Login functionality", () => {
 
   test("[ID107] @login @phone @desktop validate login with null username", async ({ page }) => {
     const loginPage = new LoginPage(page);
-  
+
     await loginPage.loginUser("", process.env.PASSWORD!);
     await loginPage.clickLoginBtn();
 
     const alertErrorRequiredIsVisible = await loginPage.validateErrorMessageRequired();
     expect(alertErrorRequiredIsVisible).toBeTruthy();
-    expect(await loginPage.getAlertMessageRequired()).toContain("Required");  
+    expect(await loginPage.getAlertMessageRequired()).toContain("Required");
   });
 
-  test("[ID108] @login @phone @desktop validate login without providing user and password", async ({ page }) => {
+  test("[ID108] @login @phone @desktop validate login without providing user and password", async ({
+    page,
+  }) => {
     const loginPage = new LoginPage(page);
-  
+
     await loginPage.loginUser("", "");
     await loginPage.clickLoginBtn();
 
     const alertMessages = await loginPage.getAlertMessagesRequired();
-    console.log(alertMessages)
+    console.log(alertMessages);
     expect(alertMessages.length).toBe(2);
-  
+
     for (const alertMessage of alertMessages) {
       expect(alertMessage.isVisible).toBe(true);
-      expect(alertMessage.textContent).toBe('Required');
+      expect(alertMessage.textContent).toBe("Required");
     }
   });
 });
