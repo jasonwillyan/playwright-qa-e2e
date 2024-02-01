@@ -139,7 +139,6 @@ test.describe("Login functionality", () => {
     await loginPage.clickLoginBtn();
 
     const alertMessages = await loginPage.getAlertMessagesRequired();
-    console.log(alertMessages);
     expect(alertMessages.length).toBe(2);
 
     for (const alertMessage of alertMessages) {
