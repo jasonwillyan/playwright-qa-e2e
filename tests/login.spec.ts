@@ -19,15 +19,18 @@ test.describe("Login Page Interface", () => {
     };
 
     const loginPage = new LoginPage(page);
+
+    const isMobile = await loginPage.isMobileEnvironment();
+
     expect(await page.title()).toBe(title);
 
     const titleText = await loginPage.getTitleModalLogin();
     expect(titleText).toBe(titleModal);
 
-    const isTitleVisible = await loginPage.validateLoginIsVisible();
+    const isTitleVisible = await loginPage.validateLoginModalIsVisible();
     expect(isTitleVisible).toBeTruthy();
 
-    const areLogosVisible = await loginPage.validateLogosVisible();
+    const areLogosVisible = await loginPage.validateLogosVisible(isMobile);
     expect(areLogosVisible).toBeTruthy();
 
     const placeholders = await loginPage.validatePlaceholders();

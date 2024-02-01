@@ -26,7 +26,7 @@ export class LoginPage extends Base {
     return this.isElementVisible(this.selectors.dashboard.username);
   }
 
-  async validateLoginIsVisible() {
+  async validateLoginModalIsVisible() {
     return this.isElementVisible(this.selectors.login.title);
   }
 
@@ -38,8 +38,10 @@ export class LoginPage extends Base {
     return this.isElementVisible(this.selectors.login.alertErro);
   }
 
-  async validateLogosVisible(): Promise<boolean> {
-    for (const item of this.selectors.login.logo) {
+  async validateLogosVisible(isMobile: boolean): Promise<boolean> {
+    const logosToValidate = isMobile ? [this.selectors.login.logo[0]] : this.selectors.login.logo;
+
+    for (const item of logosToValidate) {
       let logoLocator = this.page.locator(item);
       await this.page.waitForSelector(item);
       if (!(await logoLocator.isVisible())) {

@@ -13,6 +13,11 @@ export class Base {
     this.page = page;
   }
 
+  async isMobileEnvironment() {
+    const isMobile = await this.page.evaluate(() => window.innerWidth <= 768);
+    return isMobile;
+  }
+  
   async waitForElement(selector: string): Promise<void> {
     await this.page.waitForSelector(selector);
   }
