@@ -72,15 +72,18 @@ test.describe("Login functionality", () => {
     page,
   }) => {
     const loginPage = new LoginPage(page);
+    const isMobile = loginPage.isMobileEnvironment();
 
     await loginPage.loginUser(process.env.USER!, process.env.PASSWORD!);
     await loginPage.clickLoginBtn();
     await page.waitForLoadState("load", { timeout: 3000 });
 
     expect(page.url()).toContain("/dashboard/index");
-    expect(await loginPage.validateUsername()).toBeTruthy();
-    const nameIsVisible = await loginPage.validateUserAvatarIsVisible();
-    expect(nameIsVisible).toBeTruthy();
+    const avatarIsVisible = await loginPage.validateUserAvatarIsVisible();
+    expect(avatarIsVisible).toBeTruthy();
+    if(!isMobile) {
+      expect(await loginPage.validateUsername()).toBeTruthy();
+    }
   });
 
   test("[ID104] @login @phone @desktop validate login with incorrect password", async ({
