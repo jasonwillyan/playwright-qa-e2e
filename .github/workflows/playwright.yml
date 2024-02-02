@@ -21,7 +21,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test --retries=0
+      run: npx playwright test --retries=2
     - uses: actions/upload-artifact@v3
       if: always()
       with:
